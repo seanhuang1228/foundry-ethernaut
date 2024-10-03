@@ -38,18 +38,6 @@ contract TestElevator is BaseTest {
 
         vm.startPrank(player, player);
 
-        // Never ever trust anything that is a blackbox
-        // If you need to do an integration with an external contract/protocol
-        // always look for the documentation and the source code
-        // will they act as expected? are they upgradable? can you trust the team?
-        // In this case, our `Exploiter` contract just returned what we wanted to return
-        // to pass the challenge without even caring about the `floor` they passed to us
-        // to know if it was the last one or not
-
-        Exploiter exploiter = new Exploiter(level);
-        exploiter.goTo(0);
-
-        assertEq(level.top(), true);
 
         vm.stopPrank();
     }
