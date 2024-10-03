@@ -38,8 +38,5 @@ contract TestRecovery is BaseTest {
         vm.startPrank(player, player);
 
         vm.stopPrank();
-
-        assertEq(lostContract.balance, 0);
-        assertEq(player.balance, playerBalanceBefore + contractBalanceBefore);
     }
 }

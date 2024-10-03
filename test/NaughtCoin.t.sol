@@ -39,8 +39,5 @@ contract TestNaughtCoin is BaseTest {
         vm.startPrank(player, player);
 
         vm.stopPrank();
-
-        assertEq(level.balanceOf(player), 0);
-        assertEq(level.balanceOf(tempUser), playerBalance);
     }
 }

